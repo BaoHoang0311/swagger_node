@@ -22,25 +22,16 @@ router.post("/api/login", async (req, res, next) => {
   return res.status(500).json("login failed");
 });
 
-router.get(
-  "/api/get1",
-  authenticationMiddlewareV2,
-  async (req, res, next) => {
-    return res.status(200).json({data:'/api/get1',info: req.user })
-  }
-);
+router.get("/api/get1", authenticationMiddlewareV2, async (req, res, next) => {
+  return res.status(200).json({ data: "/api/get1", info: req.user });
+});
 
-router.get(
-  "/api/get2",
-  async (req, res, next) => {
-    return res.status(200).json({data:'/api/get2' })
-  }
-);
+router.get("/api/get2", async (req, res, next) => {
+  return res.status(200).json({ data: "/api/get2" });
+});
 
-router.get(
-  "/api/get3/:name",
-  async (req, res, next) => {
-    return res.status(200).json({data:`get3:${req.params.name}` })
-  }
-);
+router.get("/api/get3/:name", async (req, res, next) => {
+  return res.status(200).json({ data: `get3: params: ${req.params.name} / query (id/name): ${req.query.id}/${req.query.age}` });
+});
+
 module.exports = router;

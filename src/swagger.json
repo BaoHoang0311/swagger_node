@@ -22,19 +22,20 @@
           }
         },
         "requestBody": {
+          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
+                "required": ["username", "password"],
                 "properties": {
                   "username": {
                     "type": "string",
-                    "default": "bao",
                     "description": "username/password bao/1234"
                   },
                   "password": {
                     "type": "string",
-                    "format": "date"
+                    "default": "1234"
                   }
                 }
               }
@@ -78,7 +79,27 @@
           "200": {
             "description": "get3 successfully"
           }
-        }
+        },
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "age",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            }
+          }
+        ]
       },
       "parameters": [
         {
