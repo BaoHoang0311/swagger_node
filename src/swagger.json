@@ -1,0 +1,104 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "swagger_demo_nodejs",
+    "version": "1.0.0",
+    "description": "swagger_demo_nodejs"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3056"
+    }
+  ],
+  "paths": {
+    "/api/login": {
+      "post": {
+        "summary": "login",
+        "description": "Authenticate a user with their credentials.  \nExample: \n- bao/1234",
+        "tags": ["Authen"],
+        "responses": {
+          "200": {
+            "description": "login successfully"
+          }
+        },
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": {
+                    "type": "string",
+                    "default": "bao",
+                    "description": "username/password bao/1234"
+                  },
+                  "password": {
+                    "type": "string",
+                    "format": "date"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/get2": {
+      "get": {
+        "summary": "get2",
+        "tags": ["Detail"],
+        "responses": {
+          "200": {
+            "description": "get2 successfully"
+          }
+        }
+      }
+    },
+    "/api/get1": {
+      "get": {
+        "summary": "get1",
+        "tags": ["Detail"],
+        "responses": {
+          "200": {
+            "description": "get1 successfully"
+          }
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/api/get3/{name}": {
+      "get": {
+        "summary": "get3",
+        "tags": ["Detail"],
+        "responses": {
+          "200": {
+            "description": "get3 successfully"
+          }
+        }
+      },
+      "parameters": [
+        {
+          "name": "name",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "deprecated": false
+          }
+        }
+      ]
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "description": "Bearer token"
+      }
+    }
+  }
+}
