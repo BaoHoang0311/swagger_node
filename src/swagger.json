@@ -7,58 +7,49 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3056"
+      "url": "http://localhost:3056/api"
     }
   ],
   "paths": {
-    "/api/login": {
+    "/login": {
       "post": {
         "summary": "login",
-        "description": "Authenticate a user with their credentials.  \nExample: \n- bao/1234",
         "tags": ["Authen"],
         "responses": {
           "200": {
             "description": "login successfully"
           }
         },
+        "description": "Authenticate a user with their credentials.\nExample:\n- bao/1234",
         "requestBody": {
-          "required": true,
           "content": {
             "application/json": {
               "schema": {
                 "type": "object",
-                "required": ["username", "password"],
                 "properties": {
                   "username": {
                     "type": "string",
-                    "description": "username/password bao/1234"
+                    "default": "bao"
                   },
                   "password": {
                     "type": "string",
                     "default": "1234"
+                  },
+                  "date": {
+                    "format": "date"
                   }
-                }
+                },
+                "required": ["username", "password"]
               }
             }
           }
         }
       }
     },
-    "/api/get2": {
-      "get": {
-        "summary": "get2",
-        "tags": ["Detail"],
-        "responses": {
-          "200": {
-            "description": "get2 successfully"
-          }
-        }
-      }
-    },
-    "/api/get1": {
+    "/get1": {
       "get": {
         "summary": "get1",
-        "tags": ["Detail"],
+        "tags": ["Details"],
         "responses": {
           "200": {
             "description": "get1 successfully"
@@ -66,48 +57,68 @@
         },
         "security": [
           {
-            "BearerAuth": []
+            "BearerAuth": [],
+            "ApiAuth":[]
           }
         ]
       }
     },
-    "/api/get3/{name}": {
+    "/get2": {
       "get": {
-        "summary": "get3",
-        "tags": ["Detail"],
+        "summary": "get2",
+        "tags": ["Details"],
         "responses": {
           "200": {
-            "description": "get3 successfully"
+            "description": "get2 successfully"
           }
-        },
+        }
+      }
+    },
+    "/get3/{nameee}": {
+      "get": {
+        "summary": "get3/:name",
+        "tags": ["Details"],
         "parameters": [
           {
             "name": "id",
             "in": "query",
             "required": false,
             "schema": {
-              "type": "integer"
+              "type": "string"
             }
           },
           {
             "name": "age",
             "in": "query",
-            "required": true,
+            "required": false,
             "schema": {
               "type": "string",
-              "format": "date",
-              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+              "format":"date"
+            }
+          },
+          {
+            "name": "isCheck",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "boolean",
+              "default": true
             }
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "description": "get3 successfully"
+          }
+        }
       },
       "parameters": [
         {
-          "name": "name",
+          "name": "nameee",
           "in": "path",
           "required": true,
           "schema": {
-            "deprecated": false
+            "type": "string"
           }
         }
       ]
@@ -117,8 +128,12 @@
     "securitySchemes": {
       "BearerAuth": {
         "type": "http",
-        "scheme": "bearer",
-        "description": "Bearer token"
+        "scheme": "bearer"
+      },
+      "ApiAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-api-key"
       }
     }
   }
